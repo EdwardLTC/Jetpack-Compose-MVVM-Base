@@ -28,13 +28,14 @@ import com.example.myapplication.feature.presentation.home.HomeRoute
 
 
 object BottomAppRoute : NavRoute<BottomAppViewModel> {
-    override val route: String = "bottom_app"
+    override val route: String = "bottom_app/{name}"
 
     @Composable
     override fun viewModel(): BottomAppViewModel = hiltViewModel()
 
     @Composable
     override fun Content(viewModel: BottomAppViewModel) = MainBottomApp()
+
 }
 
 

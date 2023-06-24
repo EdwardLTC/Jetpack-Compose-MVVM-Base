@@ -11,6 +11,6 @@ class LoginViewModel @Inject constructor(
     private val routeNavigator: RouteNavigator
 ) : ViewModel(), RouteNavigator by routeNavigator {
     fun onLoginPress() {
-        navigateToRoute(BottomAppRoute.route)
+        navigateToRoute(BottomAppRoute.route+"{name=hello}")
     }
 }

@@ -17,7 +17,7 @@ fun NavigationComponent(navHostController: NavHostController, paddingValues: Pad
         startDestination = LoginRoute.route,
         modifier = Modifier.padding(paddingValues)
     ) {
-        BottomAppRoute.composable(this, navHostController, isCanBackHandle = false)
+        BottomAppRoute.composable(this, navHostController, isDisableBackHandle = true)
         LoginRoute.composable(this, navHostController)
     }
 }

@@ -11,11 +11,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.feature.navigation.base.NavRoute
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NamedNavArgument
 
 
 object LoginRoute : NavRoute<LoginViewModel> {
     override val route: String = "login"
-
     @Composable
     override fun viewModel(): LoginViewModel = hiltViewModel()
 

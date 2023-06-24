@@ -44,16 +44,13 @@ interface NavRoute<T : RouteNavigator> {
     fun composable(
         builder: NavGraphBuilder,
         navHostController: NavHostController,
-        isCanBackHandle: Boolean = true,
+        isDisableBackHandle: Boolean = false,
     ) {
         builder.composable(route, getArguments()) {
             val viewModel = viewModel()
             val viewStateAsState by viewModel.navigationState.collectAsState()
-            BackHandler(isCanBackHandle) {
-               Log.d("Nav", "${this@NavRoute} BackHandler status $isCanBackHandle")
-            }
+            BackHandler(isDisableBackHandle) {}
             LaunchedEffect(viewStateAsState) {
-                Log.d("Nav", "${this@NavRoute} updateNavigationState to $viewStateAsState")
                 updateNavigationState(navHostController, viewStateAsState, viewModel::onNavigated)
             }
 

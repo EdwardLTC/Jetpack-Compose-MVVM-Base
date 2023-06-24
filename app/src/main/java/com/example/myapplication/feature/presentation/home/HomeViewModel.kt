@@ -9,7 +9,4 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val routeNavigator: RouteNavigator
 ) : ViewModel(), RouteNavigator by routeNavigator {
-    fun onNavigateToDetail() {
-        navigateToRoute("detail")
-    }
 }

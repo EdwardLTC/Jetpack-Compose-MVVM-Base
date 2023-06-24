@@ -13,6 +13,7 @@ interface RouteNavigator {
     fun navigateUp()
     fun popToRoute(route: String)
     fun navigateToRoute(route: String)
+
     val navigationState: StateFlow<NavigationState>
 }
 
