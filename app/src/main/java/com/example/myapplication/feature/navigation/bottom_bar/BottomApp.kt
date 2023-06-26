@@ -1,6 +1,8 @@
 package com.example.myapplication.feature.navigation.bottom_bar
 
 import android.annotation.SuppressLint
+import android.os.Bundle
+import android.util.Log
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -15,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -34,7 +37,7 @@ object BottomAppRoute : NavRoute<BottomAppViewModel> {
     override fun viewModel(): BottomAppViewModel = hiltViewModel()
 
     @Composable
-    override fun Content(viewModel: BottomAppViewModel) = MainBottomApp()
+    override fun Content(viewModel: BottomAppViewModel, arguments: Bundle?) = MainBottomApp(arguments)
 
 }
 
@@ -42,7 +45,8 @@ object BottomAppRoute : NavRoute<BottomAppViewModel> {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainBottomApp() {
+fun MainBottomApp(argument: Bundle?) {
+    Log.d("MainBottomApp",argument.toString())
     val navController = rememberNavController()
     Scaffold(bottomBar = { BottomBar(navController) }
     ) {
@@ -95,11 +99,11 @@ fun RowScope.AddItem(
 ) {
     BottomNavigationItem(
         label = {
-            Text(text = "Home")
+            Text(text = "Home") //replace with your label
         },
         icon = {
             Icon(
-                imageVector = Icons.Default.Home,
+                imageVector = Icons.Default.Home, //replace with your icon
                 contentDescription = "Navigation Icon"
             )
         },

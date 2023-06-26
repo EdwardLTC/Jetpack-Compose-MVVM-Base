@@ -1,5 +1,6 @@
 package com.example.myapplication.feature.presentation.home
 
+import android.os.Bundle
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,7 +17,7 @@ object HomeRoute : NavRoute<HomeViewModel> {
     override fun viewModel(): HomeViewModel = hiltViewModel()
 
     @Composable
-    override fun Content(viewModel: HomeViewModel) = HomeScreen()
+    override fun Content(viewModel: HomeViewModel, arguments: Bundle?) = HomeScreen()
 
 }
 

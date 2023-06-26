@@ -3,6 +3,7 @@ package com.example.myapplication.feature.presentation.auth.login
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.feature.navigation.base.RouteNavigator
 import com.example.myapplication.feature.navigation.bottom_bar.BottomAppRoute
+import com.example.myapplication.feature.presentation.auth.register.RegisterRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -12,5 +13,9 @@ class LoginViewModel @Inject constructor(
 ) : ViewModel(), RouteNavigator by routeNavigator {
     fun onLoginPress() {
         navigateToRoute(BottomAppRoute.route+"{name=hello}")
+    }
+
+    fun navigateToRegister() {
+        navigateToRoute(RegisterRoute.route)
     }
 }

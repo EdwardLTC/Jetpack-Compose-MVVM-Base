@@ -1,5 +1,6 @@
 package com.example.myapplication.feature.presentation.explore
 
+import android.os.Bundle
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,7 +17,7 @@ object ExploreRoute : NavRoute<ExploreViewModel> {
     override fun viewModel(): ExploreViewModel = hiltViewModel()
 
     @Composable
-    override fun Content(viewModel: ExploreViewModel) = ExploreScreen()
+    override fun Content(viewModel: ExploreViewModel, arguments: Bundle?) = ExploreScreen()
 
 }
 @Composable
