@@ -17,7 +17,7 @@ object ExploreRoute : NavRoute<ExploreViewModel> {
     override fun viewModel(): ExploreViewModel = hiltViewModel()
 
     @Composable
-    override fun Content(viewModel: ExploreViewModel, arguments: Bundle?) = ExploreScreen()
+    override fun Content(viewModel: ExploreViewModel) = ExploreScreen()
 
 }
 @Composable

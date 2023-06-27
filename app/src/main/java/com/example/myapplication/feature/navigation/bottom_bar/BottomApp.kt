@@ -22,10 +22,13 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.myapplication.feature.navigation.base.NavRoute
+import com.example.myapplication.feature.presentation.auth.login.LoginRoute
 import com.example.myapplication.feature.presentation.explore.ExploreRoute
 import com.example.myapplication.feature.presentation.home.HomeRoute
 
@@ -37,7 +40,7 @@ object BottomAppRoute : NavRoute<BottomAppViewModel> {
     override fun viewModel(): BottomAppViewModel = hiltViewModel()
 
     @Composable
-    override fun Content(viewModel: BottomAppViewModel, arguments: Bundle?) = MainBottomApp(arguments)
+    override fun Content(viewModel: BottomAppViewModel) = MainBottomApp()
 
 }
 
@@ -45,8 +48,7 @@ object BottomAppRoute : NavRoute<BottomAppViewModel> {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainBottomApp(argument: Bundle?) {
-    Log.d("MainBottomApp",argument.toString())
+fun MainBottomApp() {
     val navController = rememberNavController()
     Scaffold(bottomBar = { BottomBar(navController) }
     ) {

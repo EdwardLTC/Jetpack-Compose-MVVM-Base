@@ -18,11 +18,12 @@ import com.example.myapplication.feature.navigation.base.NavRoute
 
 object RegisterRoute : NavRoute<RegisterViewModel> {
     override val route: String = "register"
+
     @Composable
     override fun viewModel(): RegisterViewModel = hiltViewModel()
 
     @Composable
-    override fun Content(viewModel: RegisterViewModel, arguments: Bundle?) = RegisterScreen(
+    override fun Content(viewModel: RegisterViewModel) = RegisterScreen(
         NavigateLogin = viewModel::navToLogin
     )
 }

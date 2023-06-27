@@ -24,7 +24,7 @@ interface NavRoute<T : RouteNavigator> {
      * Returns the screen's content.
      */
     @Composable
-    fun Content(viewModel: T, arguments: Bundle?)
+    fun Content(viewModel: T)
 
     /**
      * Returns the screen's ViewModel. Needs to be overridden so that Hilt can generate code for the factory for the ViewModel class.
@@ -54,8 +54,7 @@ interface NavRoute<T : RouteNavigator> {
             LaunchedEffect(viewStateAsState) {
                 updateNavigationState(navHostController, viewStateAsState, viewModel::onNavigated)
             }
-            val arguments = it.arguments
-            Content(viewModel, arguments)
+            Content(viewModel)
         }
     }
 

@@ -9,13 +9,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val routeNavigator: RouteNavigator
+    private val routeNavigator: RouteNavigator,
 ) : ViewModel(), RouteNavigator by routeNavigator {
+
     fun onLoginPress() {
-        navigateToRoute(BottomAppRoute.route+"{name=hello}")
+        navigateToRoute(BottomAppRoute.route + "{hello}")
     }
 
     fun navigateToRegister() {
         navigateToRoute(RegisterRoute.route)
     }
+
 }

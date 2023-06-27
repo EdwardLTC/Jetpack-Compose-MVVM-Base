@@ -17,7 +17,7 @@ object HomeRoute : NavRoute<HomeViewModel> {
     override fun viewModel(): HomeViewModel = hiltViewModel()
 
     @Composable
-    override fun Content(viewModel: HomeViewModel, arguments: Bundle?) = HomeScreen()
+    override fun Content(viewModel: HomeViewModel) = HomeScreen()
 
 }
 
