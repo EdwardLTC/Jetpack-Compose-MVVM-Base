@@ -14,7 +14,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
 
-    fun providePokemonRepository(api: ApiService) = ApiRepository(api)
+    @Provides
+    fun provideApiRepository(api: ApiService) = ApiRepository(api)
 
     @Singleton
     @Provides

@@ -1,6 +1,5 @@
 package com.example.myapplication.feature.presentation.auth.login
 
-import android.os.Bundle
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,9 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.feature.navigation.base.NavRoute
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
+import kotlin.reflect.KSuspendFunction0
 
 
 object LoginRoute : NavRoute<LoginViewModel> {
@@ -27,7 +24,8 @@ object LoginRoute : NavRoute<LoginViewModel> {
     @Composable
     override fun Content(viewModel: LoginViewModel) = LoginScreen(
         onClickLogin = viewModel::onLoginPress,
-        onNavigateToRegister = viewModel::navigateToRegister
+        onNavigateToRegister = viewModel::navigateToRegister,
+        loadProducts = viewModel::loadProduct
     )
 }
 
@@ -37,7 +35,9 @@ fun LoginScreen(
     modifier: Modifier = Modifier,
     onClickLogin: () -> Unit,
     onNavigateToRegister: () -> Unit = {},
+    loadProducts: () -> Unit = {},
 ) {
+    loadProducts()
     Box(
         modifier = Modifier
             .fillMaxSize()
