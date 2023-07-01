@@ -13,7 +13,7 @@ interface RouteNavigator {
     fun onNavigated(state: NavigationState)
     fun navigateUp()
     fun popToRoute(route: String)
-    fun navigateToRoute(route: String)
+    fun navigateToRoute(route: String, inclusive: Boolean = false)
 
     val navigationState: StateFlow<NavigationState>
 }
@@ -36,7 +36,8 @@ class MyRouteNavigator : RouteNavigator {
 
     override fun navigateUp() = navigate(NavigationState.NavigateUp())
 
-    override fun navigateToRoute(route: String) = navigate(NavigationState.NavigateToRoute(route))
+    override fun navigateToRoute(route: String, inclusive: Boolean) =
+        navigate(NavigationState.NavigateToRoute(route, inclusive))
 
     @VisibleForTesting
     fun navigate(state: NavigationState) {

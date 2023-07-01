@@ -68,7 +68,14 @@ interface NavRoute<T : RouteNavigator> {
     ) {
         when (navigationState) {
             is NavigationState.NavigateToRoute -> {
-                navHostController.navigate(navigationState.route)
+                navHostController.navigate(navigationState.route) {
+                    popUpTo(
+                        navHostController.currentBackStackEntry?.destination?.route
+                            ?: return@navigate
+                    ) {
+                        inclusive = navigationState.inclusive
+                    }
+                }
                 onNavigated(navigationState)
             }
 
