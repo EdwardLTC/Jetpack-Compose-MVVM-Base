@@ -12,9 +12,4 @@ class BottomAppViewModel @Inject constructor(
     private val routeNavigator: RouteNavigator,
     savedStateHandle: SavedStateHandle
 ) : ViewModel(), RouteNavigator by routeNavigator {
-    init {
-        savedStateHandle.get<String>("name")?.let {
-            Log.d("BottomAppViewModel", Regex("[^A-Za-z0-9 ]").replace(it.replace("name", ""), ""))
-        }
-    }
 }

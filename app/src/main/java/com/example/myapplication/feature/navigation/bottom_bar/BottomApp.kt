@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStore
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -48,8 +49,7 @@ object BottomAppRoute : NavRoute<BottomAppViewModel> {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainBottomApp() {
-    val navController = rememberNavController()
+fun MainBottomApp(navController: NavHostController = rememberNavController()) {
     Scaffold(bottomBar = { BottomBar(navController) }
     ) {
         BottomNavGraph(navController = navController)

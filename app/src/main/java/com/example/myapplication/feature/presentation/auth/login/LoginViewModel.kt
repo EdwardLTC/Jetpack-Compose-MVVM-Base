@@ -22,10 +22,11 @@ class LoginViewModel @Inject constructor(
 
     fun loadProduct() {
         viewModelScope.launch {
-            when(val result = repository.getProductList()){
+            when (val result = repository.getProductList()) {
                 is Resource.Success -> {
                     val data = result.data
                 }
+
                 is Resource.Error -> {
                     val message = result.message
                     Log.d("LoginViewModel", "loadProduct: $message")
@@ -37,7 +38,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onLoginPress() {
-        navigateToRoute(BottomAppRoute.route + "{hello}")
+        navigateToRoute(BottomAppRoute.route + "{hello}", inclusive = true)
     }
 
     fun navigateToRegister() {
