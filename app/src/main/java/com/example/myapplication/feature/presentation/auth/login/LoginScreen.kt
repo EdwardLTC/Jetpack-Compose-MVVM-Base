@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.feature.navigation.base.NavRoute
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import kotlin.reflect.KSuspendFunction0
 
 
@@ -24,8 +25,6 @@ object LoginRoute : NavRoute<LoginViewModel> {
     @Composable
     override fun Content(viewModel: LoginViewModel) = LoginScreen(
         onClickLogin = viewModel::onLoginPress,
-        onNavigateToRegister = viewModel::navigateToRegister,
-        loadProducts = viewModel::loadProduct
     )
 }
 
@@ -34,10 +33,7 @@ object LoginRoute : NavRoute<LoginViewModel> {
 fun LoginScreen(
     modifier: Modifier = Modifier,
     onClickLogin: () -> Unit,
-    onNavigateToRegister: () -> Unit = {},
-    loadProducts: () -> Unit = {},
 ) {
-    loadProducts()
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -46,9 +42,6 @@ fun LoginScreen(
         Column {
             Button(onClick = onClickLogin) {
                 Text(text = "Login")
-            }
-            Button(onClick = onNavigateToRegister) {
-                Text(text = "nav Register")
             }
         }
 

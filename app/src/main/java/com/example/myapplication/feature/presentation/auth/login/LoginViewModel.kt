@@ -3,6 +3,8 @@ package com.example.myapplication.feature.presentation.auth.login
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavHostController
+import com.example.myapplication.di.MainAppNavigation
 import com.example.myapplication.feature.domain.reponsitory.ApiRepository
 import com.example.myapplication.feature.domain.utils.Resource
 import com.example.myapplication.feature.navigation.base.RouteNavigator
@@ -15,10 +17,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val routeNavigator: RouteNavigator,
+    @MainAppNavigation private val routeNavigator: RouteNavigator,
     private val repository: ApiRepository
 ) : ViewModel(), RouteNavigator by routeNavigator {
-
 
     fun loadProduct() {
         viewModelScope.launch {
@@ -38,7 +39,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onLoginPress() {
-        navigateToRoute(BottomAppRoute.route + "{hello}", inclusive = true)
+        navigateToRoute(BottomAppRoute.routeWithoutArgs + "hello", inclusive = true)
     }
 
     fun navigateToRegister() {

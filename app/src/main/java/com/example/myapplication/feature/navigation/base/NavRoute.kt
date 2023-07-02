@@ -1,13 +1,11 @@
 package com.example.myapplication.feature.navigation.base
 
-import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -37,7 +35,7 @@ interface NavRoute<T : RouteNavigator> {
      *
      * We do it here and not in the [NavigationComponent to keep it centralized]
      */
-    fun getArguments(): List<NamedNavArgument> = listOf()
+    fun getArguments(): List<NamedNavArgument> = emptyList()
 
     /**
      * Generates the composable for this route.
@@ -94,8 +92,3 @@ interface NavRoute<T : RouteNavigator> {
         }
     }
 }
-
-fun <T> SavedStateHandle.getOrThrow(key: String): T =
-    get<T>(key) ?: throw IllegalArgumentException(
-        "Mandatory argument $key missing in arguments."
-    )
