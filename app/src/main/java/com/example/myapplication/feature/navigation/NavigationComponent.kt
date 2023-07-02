@@ -6,6 +6,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -21,7 +22,10 @@ import com.example.myapplication.feature.presentation.explore.ExploreRoute
 import com.example.myapplication.feature.presentation.home.HomeRoute
 
 @Composable
-fun NavigationComponent(navHostController: NavHostController, paddingValues: PaddingValues) {
+fun NavigationComponent(
+    navHostController: NavHostController,
+    paddingValues: PaddingValues = PaddingValues(0.dp)
+) {
     NavHost(
         navController = navHostController,
         startDestination = LoginRoute.route,
@@ -29,21 +33,6 @@ fun NavigationComponent(navHostController: NavHostController, paddingValues: Pad
     ) {
         LoginRoute.composable(this, navHostController)
         RegisterRoute.composable(this, navHostController)
-//        BottomAppRoute.composable(this, navHostController)
-        composable(BottomAppRoute.route) {
-            MainBottomApp(navHostController)
-        }
+        BottomAppRoute.composable(this, navHostController)
     }
 }
-
-
-fun NavGraphBuilder.bottomAppGraph(navController: NavHostController) {
-    navigation(
-        startDestination = HomeRoute.route,
-        route = BottomAppRoute.route
-    ) {
-        HomeRoute.composable(this, navController)
-        ExploreRoute.composable(this, navController)
-    }
-}
-

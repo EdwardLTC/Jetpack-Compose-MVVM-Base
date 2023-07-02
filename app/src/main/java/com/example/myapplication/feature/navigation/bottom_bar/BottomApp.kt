@@ -1,7 +1,6 @@
 package com.example.myapplication.feature.navigation.bottom_bar
 
 import android.annotation.SuppressLint
-import android.os.Bundle
 import android.util.Log
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.BottomNavigation
@@ -10,6 +9,7 @@ import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -17,8 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStore
-import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -37,6 +36,9 @@ import com.example.myapplication.feature.presentation.home.HomeRoute
 object BottomAppRoute : NavRoute<BottomAppViewModel> {
     override val route: String = "bottom_app/{name}"
 
+    const val routeWithoutArgs: String = "bottom_app/"
+
+
     @Composable
     override fun viewModel(): BottomAppViewModel = hiltViewModel()
 
@@ -49,7 +51,8 @@ object BottomAppRoute : NavRoute<BottomAppViewModel> {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainBottomApp(navController: NavHostController = rememberNavController()) {
+fun MainBottomApp() {
+    val navController = rememberNavController()
     Scaffold(bottomBar = { BottomBar(navController) }
     ) {
         BottomNavGraph(navController = navController)
@@ -61,7 +64,11 @@ fun MainBottomApp(navController: NavHostController = rememberNavController()) {
  */
 @Composable
 fun BottomNavGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = HomeRoute.route) {
+    NavHost(
+        navController = navController,
+        startDestination = HomeRoute.route,
+        route = BottomAppRoute.route
+    ) {
         HomeRoute.composable(this, navController)
         ExploreRoute.composable(this, navController)
     }
@@ -105,7 +112,7 @@ fun RowScope.AddItem(
         },
         icon = {
             Icon(
-                imageVector = Icons.Default.Home, //replace with your icon
+                imageVector = Icons.Default.AccountBox, //replace with your icon
                 contentDescription = "Navigation Icon"
             )
         },
