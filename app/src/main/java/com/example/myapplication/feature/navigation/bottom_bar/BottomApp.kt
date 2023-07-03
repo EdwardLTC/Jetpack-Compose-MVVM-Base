@@ -38,7 +38,6 @@ object BottomAppRoute : NavRoute<BottomAppViewModel> {
 
     const val routeWithoutArgs: String = "bottom_app/"
 
-
     @Composable
     override fun viewModel(): BottomAppViewModel = hiltViewModel()
 
