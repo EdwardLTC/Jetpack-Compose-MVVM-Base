@@ -9,6 +9,7 @@ import com.example.myapplication.feature.navigation.base.RouteNavigator
 import com.example.myapplication.feature.navigation.bottom_bar.BottomAppRoute
 import com.example.myapplication.feature.presentation.auth.register.RegisterRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,29 +18,30 @@ class LoginViewModel @Inject constructor(
     private val routeNavigator: RouteNavigator,
     private val repository: ApiRepository
 ) : ViewModel(), RouteNavigator by routeNavigator {
-    fun loadProduct() {
-        viewModelScope.launch {
-            when (val result = repository.getProductList()) {
-                is Resource.Success -> {
-                    val data = result.data
-                }
 
-                is Resource.Error -> {
-                    val message = result.message
-                    Log.d("LoginViewModel", "loadProduct: $message")
-                }
 
-                else -> {}
-            }
-        }
+    val loginUiInfo by lazy {
+        MutableStateFlow(
+            LoginState("", "")
+        )
     }
 
-    fun onLoginPress() {
-        navigateToRoute(BottomAppRoute.routeWithoutArgs + "hello", inclusive = true)
+    val isDisableButtonLogin: Boolean
+        get() = loginUiInfo.value.Username.isEmpty() || loginUiInfo.value.Password.isEmpty()
+
+
+    fun onUserNameChanged(username: String) {
+        loginUiInfo.value = loginUiInfo.value.copy(Username = username)
     }
 
-    fun navigateToRegister() {
-        navigateToRoute(RegisterRoute.route)
+    fun onPasswordChanged(password: String) {
+        loginUiInfo.value = loginUiInfo.value.copy(Password = password)
     }
 
 }
+
+
+data class LoginState(
+    val Username: String = "",
+    val Password: String = "",
+)
