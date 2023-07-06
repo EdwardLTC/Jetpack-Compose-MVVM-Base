@@ -19,7 +19,6 @@ class LoginViewModel @Inject constructor(
     private val repository: ApiRepository
 ) : ViewModel(), RouteNavigator by routeNavigator {
 
-
     val loginUiInfo by lazy {
         MutableStateFlow(
             LoginState("", "")
@@ -36,6 +35,14 @@ class LoginViewModel @Inject constructor(
 
     fun onPasswordChanged(password: String) {
         loginUiInfo.value = loginUiInfo.value.copy(Password = password)
+    }
+
+    fun onButtonLoginClicked() {
+        navigateToRoute(BottomAppRoute.route, inclusive = true)
+    }
+
+    fun onRegisterClicked() {
+        navigateToRoute(RegisterRoute.route)
     }
 
 }

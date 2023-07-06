@@ -52,7 +52,9 @@ object LoginRoute : NavRoute<LoginViewModel> {
         loginUiInfo = viewModel.loginUiInfo.collectAsState().value,
         onUserNameChanged = viewModel::onUserNameChanged,
         onPasswordChanged = viewModel::onPasswordChanged,
-        isDisableButtonLogin = viewModel.isDisableButtonLogin
+        isDisableButtonLogin = viewModel.isDisableButtonLogin,
+        onLoginClick = viewModel::onButtonLoginClicked,
+        onRegisterClick = viewModel::onRegisterClicked,
     )
 }
 
@@ -63,6 +65,9 @@ fun LoginScreen(
     onUserNameChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
     isDisableButtonLogin: Boolean = false,
+    onLoginClick: () -> Unit = {},
+    onRegisterClick: () -> Unit = {},
+
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -117,7 +122,7 @@ fun LoginScreen(
 
         Button(
             text = "Login",
-            onClick = {},
+            onClick = onLoginClick,
             modifier = Modifier.padding(top = 18.dp),
             enabled = !isDisableButtonLogin,
             shape = RoundedCornerShape(8.dp)
@@ -151,7 +156,8 @@ fun LoginScreen(
         Row(
             modifier = Modifier
                 .padding(top = 24.dp)
-                .padding(horizontal = 28.dp).align(Alignment.CenterHorizontally)
+                .padding(horizontal = 28.dp)
+                .align(Alignment.CenterHorizontally)
         ) {
             Text(
                 text = "Don't have an account?",
@@ -161,6 +167,12 @@ fun LoginScreen(
                 text = " Create one",
                 fontSize = 16.sp,
                 color = Color(0xFF52CC6D),
+                modifier = Modifier.clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() }
+                ) {
+                    onRegisterClick()
+                }
             )
         }
     }
