@@ -27,6 +27,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.myapplication.feature.navigation.AppNavController
 import com.example.myapplication.feature.navigation.base.NavRoute
 import com.example.myapplication.feature.presentation.auth.login.LoginRoute
 import com.example.myapplication.feature.presentation.explore.ExploreRoute
@@ -51,7 +52,7 @@ object BottomAppRoute : NavRoute<BottomAppViewModel> {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainBottomApp() {
-    val navController = rememberNavController()
+    val navController = AppNavController.bottomNavController!!
     Scaffold(bottomBar = { BottomBar(navController) }
     ) {
         BottomNavGraph(navController = navController)
