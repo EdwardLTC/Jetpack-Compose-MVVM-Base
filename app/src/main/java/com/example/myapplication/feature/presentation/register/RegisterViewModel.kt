@@ -1,4 +1,4 @@
-package com.example.myapplication.feature.presentation.auth.register
+package com.example.myapplication.feature.presentation.register
 
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.feature.navigation.base.RouteNavigator
