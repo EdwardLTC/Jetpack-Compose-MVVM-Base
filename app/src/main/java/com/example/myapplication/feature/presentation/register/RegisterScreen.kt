@@ -1,4 +1,4 @@
-package com.example.myapplication.feature.presentation.auth.register
+package com.example.myapplication.feature.presentation.register
 
 import InputTextField
 import androidx.compose.foundation.clickable

@@ -1,4 +1,4 @@
-package com.example.myapplication.feature.presentation.auth.login
+package com.example.myapplication.feature.presentation.login
 
 import InputTextField
 import InputTextFieldType
@@ -68,7 +68,7 @@ fun LoginScreen(
     onLoginClick: () -> Unit = {},
     onRegisterClick: () -> Unit = {},
 
-) {
+    ) {
     val focusManager = LocalFocusManager.current
 
     Column(

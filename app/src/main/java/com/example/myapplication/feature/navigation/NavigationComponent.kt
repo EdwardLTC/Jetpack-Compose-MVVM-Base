@@ -2,24 +2,14 @@ package com.example.myapplication.feature.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.navigation
 import com.example.myapplication.feature.navigation.bottom_bar.BottomAppRoute
-import com.example.myapplication.feature.navigation.bottom_bar.BottomBar
-import com.example.myapplication.feature.navigation.bottom_bar.BottomNavGraph
-import com.example.myapplication.feature.navigation.bottom_bar.MainBottomApp
-import com.example.myapplication.feature.presentation.auth.login.LoginRoute
-import com.example.myapplication.feature.presentation.auth.register.RegisterRoute
-import com.example.myapplication.feature.presentation.explore.ExploreRoute
-import com.example.myapplication.feature.presentation.home.HomeRoute
+import com.example.myapplication.feature.presentation.login.LoginRoute
+import com.example.myapplication.feature.presentation.register.RegisterRoute
 
 @Composable
 fun NavigationComponent(
@@ -28,7 +18,7 @@ fun NavigationComponent(
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = LoginRoute.route,
+        startDestination = BottomAppRoute.route,
         modifier = Modifier.padding(paddingValues)
     ) {
         LoginRoute.composable(this, navHostController)

@@ -1,4 +1,4 @@
-package com.example.myapplication.feature.presentation.home
+package com.example.myapplication.feature.presentation.bottom.home
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Button
@@ -8,12 +8,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.myapplication.feature.navigation.base.NavRoute
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.myapplication.feature.navigation.AppNavController
-import com.example.myapplication.feature.presentation.auth.login.LoginRoute
-import com.example.myapplication.feature.presentation.auth.register.RegisterRoute
+import com.example.myapplication.feature.presentation.login.LoginRoute
+import com.example.myapplication.feature.presentation.register.RegisterRoute
 
 
 object HomeRoute : NavRoute<HomeViewModel> {
-    override val route: String = "home"
+    override val route: String = this::class.java.simpleName.toString().replace("Route", "")
 
     @Composable
     override fun viewModel(): HomeViewModel = hiltViewModel()

@@ -1,4 +1,4 @@
-package com.example.myapplication.feature.presentation.home
+package com.example.myapplication.feature.presentation.bottom.profile
 
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.feature.navigation.base.RouteNavigator
@@ -6,7 +6,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class ProfileViewModel @Inject constructor(
     private val routeNavigator: RouteNavigator
 ) : ViewModel(), RouteNavigator by routeNavigator {
+
 }

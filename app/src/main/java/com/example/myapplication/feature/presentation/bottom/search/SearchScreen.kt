@@ -1,28 +1,26 @@
-package com.example.myapplication.feature.presentation.explore
+package com.example.myapplication.feature.presentation.bottom.search
 
-import android.os.Bundle
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.example.myapplication.feature.navigation.base.NavRoute
 
 
-object ExploreRoute : NavRoute<ExploreViewModel> {
-    override val route: String = "explore"
+object SearchRoute : NavRoute<SearchViewModel> {
+    override val route: String = this::class.java.simpleName.toString().replace("Route", "")
 
     @Composable
-    override fun viewModel(): ExploreViewModel = hiltViewModel()
+    override fun viewModel(): SearchViewModel = hiltViewModel()
 
     @Composable
-    override fun Content(viewModel: ExploreViewModel) = ExploreScreen()
+    override fun Content(viewModel: SearchViewModel) = SearchScreen()
 
 }
 @Composable
-fun ExploreScreen(
+fun SearchScreen(
     modifier: Modifier = Modifier
 ) {
     Box(modifier) {
@@ -33,5 +31,5 @@ fun ExploreScreen(
 @Preview(name = "Explore_screen", showSystemUi = true)
 @Composable
 private fun PreviewExplore_screen() {
-    ExploreScreen()
+    SearchScreen()
 }
