@@ -9,19 +9,12 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
-import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -64,8 +58,7 @@ object BottomAppRoute : NavRoute<BottomAppViewModel> {
 @Composable
 fun MainBottomApp() {
     val navController = AppNavController.bottomNavController!!
-    Scaffold(bottomBar = { BottomBar(navController) }
-    ) {
+    Scaffold(bottomBar = { BottomBar(navController) }) {
         BottomNavGraph(navController = navController)
     }
 }
@@ -95,24 +88,13 @@ fun BottomNavGraph(navController: NavHostController) {
 fun BottomBar(navController: NavHostController) {
     val bottomNavigationItems = listOf(
         BottomAppArgs(
-            route = HomeRoute.route,
-            icons = Icons.Outlined.Home,
-            label = "Home"
-        ),
-        BottomAppArgs(
-            route = SearchRoute.route,
-            icons = Icons.Outlined.Search,
-            label = "Search"
-        ),
-        BottomAppArgs(
-            route = CartRoute.route,
-            icons = Icons.Outlined.ShoppingCart,
-            label = "Cart"
-        ),
-        BottomAppArgs(
-            route = ProfileRoute.route,
-            icons = Icons.Outlined.Person,
-            label = "Profile"
+            route = HomeRoute.route, icons = Icons.Outlined.Home, label = "Home"
+        ), BottomAppArgs(
+            route = SearchRoute.route, icons = Icons.Outlined.Search, label = "Search"
+        ), BottomAppArgs(
+            route = CartRoute.route, icons = Icons.Outlined.ShoppingCart, label = "Cart"
+        ), BottomAppArgs(
+            route = ProfileRoute.route, icons = Icons.Outlined.Person, label = "Profile"
         )
     )
 
@@ -145,19 +127,24 @@ fun RowScope.AddItem(
     currentDestination: NavDestination?,
     navController: NavHostController
 ) {
+    val isSelected = currentDestination?.hierarchy?.any {
+        it.route == bottomAppArgs.route
+    } == true
+
     BottomNavigationItem(
         label = {
-            Text(text = bottomAppArgs.route)
+            Text(
+                text = bottomAppArgs.route,
+                fontSize = 12.sp,
+                color = if (isSelected) Color.Green else LocalContentColor.current.copy(alpha = ContentAlpha.disabled)
+            )
         },
         icon = {
             Icon(
-                imageVector = bottomAppArgs.icons,
-                contentDescription = "Navigation Icon"
+                imageVector = bottomAppArgs.icons, contentDescription = "Navigation Icon"
             )
         },
-        selected = currentDestination?.hierarchy?.any {
-            it.route == bottomAppArgs.route
-        } == true,
+        selected = isSelected,
         unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.disabled),
         selectedContentColor = Color.Green,
         onClick = {
@@ -165,8 +152,7 @@ fun RowScope.AddItem(
                 popUpTo(navController.graph.findStartDestination().id)
                 launchSingleTop = true
             }
-        }
-    )
+        })
 }
 
 
@@ -177,7 +163,5 @@ fun PreviewBottomBar() {
 }
 
 data class BottomAppArgs(
-    val route: String,
-    val icons: ImageVector,
-    val label: String
+    val route: String, val icons: ImageVector, val label: String
 )
