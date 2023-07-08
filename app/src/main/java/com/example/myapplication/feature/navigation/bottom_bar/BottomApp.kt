@@ -1,6 +1,7 @@
 package com.example.myapplication.feature.navigation.bottom_bar
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.height
@@ -136,7 +137,7 @@ fun RowScope.AddItem(
             Text(
                 text = bottomAppArgs.route,
                 fontSize = 12.sp,
-                color = if (isSelected) Color.Green else LocalContentColor.current.copy(alpha = ContentAlpha.disabled)
+                color = if (isSelected) Color.Green else Color.Gray,
             )
         },
         icon = {
@@ -145,7 +146,7 @@ fun RowScope.AddItem(
             )
         },
         selected = isSelected,
-        unselectedContentColor = LocalContentColor.current.copy(alpha = ContentAlpha.disabled),
+        unselectedContentColor = Color.Gray,
         selectedContentColor = Color.Green,
         onClick = {
             navController.navigate(bottomAppArgs.route) {
