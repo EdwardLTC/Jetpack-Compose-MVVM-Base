@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,14 +17,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -38,70 +42,68 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import coil.ImageLoader
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.myapplication.dummy.Food
 import com.example.myapplication.feature.ui.theme.MyIcons
 import org.jetbrains.annotations.Async
 import java.time.format.TextStyle
 
 @Composable
-fun FoodComponent(food: Food, onItemClick: (Food) -> Unit = {}) {
-    Column(
+fun FoodComponent(food: Food, onItemClick: (Food) -> Unit = {}, onAddClick: (Food) -> Unit = {}) {
+    Box(
         modifier = Modifier
             .widthIn(max = 150.dp)
             .padding(bottom = 5.dp)
-            .clickable { onItemClick(food) }
+            .wrapContentSize()
     ) {
-        Box(modifier = Modifier.fillMaxWidth()) {
-            Box(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .size(40.dp)
-                    .zIndex(2f)
-                    .border(
-                        width = 1.dp,
-                        color = Color(0xFFE0E0E0),
-                        shape = RoundedCornerShape(size = 10.dp)
-                    )
-                    .background(
-                        color = Color(0xFFFCFCFC), shape = RoundedCornerShape(size = 10.dp)
-                    )
-            ) {
-                Image(
-                    painter = painterResource(id = MyIcons.add),
-                    contentDescription = "Icon Add",
-                    modifier = Modifier.fillMaxSize()
+        Box(
+            modifier = Modifier
+                .size(40.dp)
+                .align(Alignment.TopEnd)
+                .zIndex(2f)
+                .border(
+                    width = 1.dp,
+                    color = Color(0xFFE0E0E0),
+                    shape = RoundedCornerShape(size = 10.dp)
                 )
-            }
-            Box(
+                .background(
+                    color = Color(0xFFFCFCFC), shape = RoundedCornerShape(size = 10.dp)
+                )
+                .clickable {
+                    onAddClick(food)
+                }
+        ) {
+            Image(
+                painter = painterResource(id = MyIcons.add),
+                contentDescription = "Icon Add",
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+        Column(
+            modifier = Modifier
+                .padding(end = 15.dp, bottom = 14.dp)
+                .offset(y = 14.dp)
+                .clickable { onItemClick(food) }
+        ) {
+            Card(
                 modifier = Modifier
-                    .offset(y = 14.dp)
                     .size(140.dp)
-                    .border(
-                        width = 1.dp,
-                        color = Color(0xFFE0E0E0),
-                        shape = RoundedCornerShape(size = 16.dp)
-                    )
-                    .background(
-                        color = Color(0xFFFCFCFC), shape = RoundedCornerShape(size = 16.dp)
-                    )
-                    .padding(20.dp)
+                    .padding(bottom = 8.dp)
             ) {
+
                 AsyncImage(
-                    model = food.image,
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(food.image)
+                        .crossfade(true)
+                        .build(),
                     contentDescription = "Food Image",
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxSize()
-                        .border(
-                            width = 1.dp,
-                            color = Color(0xFFE0E0E0),
-                            shape = RoundedCornerShape(size = 16.dp)
-                        ),
-                    contentScale = ContentScale.Crop,
-                    imageLoader = ImageLoader(context = LocalContext.current)
+                        .padding(12.dp)
+                        .clip(RoundedCornerShape(12.dp))
                 )
             }
-        }
-        Column(modifier = Modifier.padding(top = 20.dp, start = 5.dp, bottom = 10.dp)) {
             Text(
                 text = "$${food.price}",
                 color = Color.Green,
@@ -116,9 +118,7 @@ fun FoodComponent(food: Food, onItemClick: (Food) -> Unit = {}) {
                 lineHeight = 18.sp,
                 fontWeight = FontWeight(700)
             )
-
         }
-
     }
 }
 

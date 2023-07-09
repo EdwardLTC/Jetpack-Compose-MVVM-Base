@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.example.myapplication.feature.navigation.bottom_bar.BottomAppRoute
 import com.example.myapplication.feature.presentation.login.LoginRoute
+import com.example.myapplication.feature.presentation.product_details.ProductDetailsRoute
 import com.example.myapplication.feature.presentation.register.RegisterRoute
 
 @Composable
@@ -24,5 +25,6 @@ fun NavigationComponent(
         LoginRoute.composable(this, navHostController)
         RegisterRoute.composable(this, navHostController)
         BottomAppRoute.composable(this, navHostController)
+        ProductDetailsRoute.composable(this, navHostController)
     }
 }

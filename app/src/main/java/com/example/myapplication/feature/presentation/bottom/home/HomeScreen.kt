@@ -39,7 +39,8 @@ object HomeRoute : NavRoute<HomeViewModel> {
     @Composable
     override fun Content(viewModel: HomeViewModel) =
         HomeScreen(
-            data = viewModel.data
+            data = viewModel.data,
+            navigateToDetails = viewModel::navigateToProductDetails
         )
 }
 
@@ -47,6 +48,7 @@ object HomeRoute : NavRoute<HomeViewModel> {
 @Composable
 fun HomeScreen(
     data: List<Food>,
+    navigateToDetails: (Int) -> Unit = {}
 ) {
     var selectedTabIndex by remember { mutableStateOf(0) }
 
@@ -77,7 +79,9 @@ fun HomeScreen(
                 .padding(horizontal = 25.dp)
         ) {
             items(data.size) {
-                FoodComponent(food = data[it])
+                FoodComponent(food = data[it], onItemClick = { food ->
+                    navigateToDetails(food.id)
+                })
             }
         }
     }
