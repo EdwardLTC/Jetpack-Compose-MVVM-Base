@@ -19,7 +19,7 @@ fun NavigationComponent(
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = BottomAppRoute.route,
+        startDestination = LoginRoute.route,
         modifier = Modifier.padding(paddingValues)
     ) {
         LoginRoute.composable(this, navHostController)

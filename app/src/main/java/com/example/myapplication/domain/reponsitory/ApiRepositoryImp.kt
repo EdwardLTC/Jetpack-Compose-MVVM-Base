@@ -1,6 +1,7 @@
 package com.example.myapplication.domain.reponsitory
 
 import com.example.myapplication.domain.base.BaseRepository
+import com.example.myapplication.domain.model.Product
 import com.example.myapplication.domain.model.Products
 import com.example.myapplication.domain.remote.ApiService
 import com.example.myapplication.domain.utils.ApiState
@@ -14,7 +15,7 @@ class ApiRepositoryImp @Inject constructor(
         apiService.getProductList()
     }
 
-    override suspend fun getProductInfo(id: Int): Flow<ApiState<Products>> = safeApiCall {
+    override suspend fun getProductInfo(id: Int): Flow<ApiState<Product>> = safeApiCall {
         apiService.getProductInfo(id)
     }
 }

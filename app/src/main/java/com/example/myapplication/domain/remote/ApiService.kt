@@ -1,5 +1,6 @@
 package com.example.myapplication.domain.remote
 
+import com.example.myapplication.domain.model.Product
 import com.example.myapplication.domain.model.Products
 import retrofit2.Response
 import retrofit2.http.GET
@@ -17,6 +18,5 @@ interface ApiService {
     @GET("products/{id}")
     suspend fun getProductInfo(
         @Path("id") id: Int
-    ): Response<Products>
-
+    ): Response<Product>
 }

@@ -1,5 +1,6 @@
 package com.example.myapplication.domain.base
 
+import android.util.Log
 import com.example.myapplication.domain.utils.ApiState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -11,7 +12,6 @@ import retrofit2.Response
 import java.io.IOException
 
 abstract class BaseRepository {
-
     suspend fun <T> safeApiCall(
         dispatcher: CoroutineDispatcher = Dispatchers.IO,
         apiCall: suspend () -> Response<T>
