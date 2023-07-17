@@ -1,7 +1,5 @@
 package com.example.myapplication.feature.navigation.base
 
-import android.util.Log
-import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -43,12 +41,10 @@ interface NavRoute<T : RouteNavigator> {
     fun composable(
         builder: NavGraphBuilder,
         navHostController: NavHostController,
-        isDisableBackHandle: Boolean = false,
     ) {
         builder.composable(route, getArguments()) {
             val viewModel = viewModel()
             val viewStateAsState by viewModel.navigationState.collectAsState()
-            BackHandler(isDisableBackHandle) {}
             LaunchedEffect(viewStateAsState) {
                 updateNavigationState(navHostController, viewStateAsState, viewModel::onNavigated)
             }

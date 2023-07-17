@@ -1,16 +1,12 @@
 package com.example.myapplication.feature.presentation.login
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.myapplication.feature.domain.reponsitory.ApiRepository
-import com.example.myapplication.feature.domain.utils.Resource
+import com.example.myapplication.domain.reponsitory.ApiRepository
 import com.example.myapplication.feature.navigation.base.RouteNavigator
 import com.example.myapplication.feature.navigation.bottom_bar.BottomAppRoute
 import com.example.myapplication.feature.presentation.register.RegisterRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
