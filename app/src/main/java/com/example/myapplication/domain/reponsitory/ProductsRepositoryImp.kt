@@ -12,7 +12,7 @@ import javax.inject.Inject
 class ProductsRepositoryImp @Inject constructor(
     private val apiService: ApiService
 ) : BaseRepository(), ProductsRepository {
-    override suspend fun getProductList(): Flow<ApiState<Products>> {
+    override suspend fun getProductList(): Flow<ApiState<List<Product>>> {
         return safeApiCall {
             apiService.getProductList()
         }

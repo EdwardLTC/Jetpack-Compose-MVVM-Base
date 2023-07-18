@@ -13,7 +13,7 @@ interface ApiService {
     }
 
     @GET("products")
-    suspend fun getProductList(): Response<Products>
+    suspend fun getProductList(): Response<List<Product>>
 
     @GET("products/{id}")
     suspend fun getProductInfo(
