@@ -1,8 +1,6 @@
 package com.example.myapplication.domain.base
 
-import android.util.Log
 import com.example.myapplication.domain.utils.ApiState
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -12,10 +10,7 @@ import retrofit2.Response
 import java.io.IOException
 
 abstract class BaseRepository {
-    suspend fun <T> safeApiCall(
-        dispatcher: CoroutineDispatcher = Dispatchers.IO,
-        apiCall: suspend () -> Response<T>
-    ): Flow<ApiState<T>> = flow {
+    suspend fun <T> safeApiCall(apiCall: suspend () -> Response<T>): Flow<ApiState<T>> = flow {
         emit(ApiState.Loading)
         val response = apiCall()
         if (response.isSuccessful) {
@@ -36,5 +31,6 @@ abstract class BaseRepository {
     }.catch { e ->
         e.printStackTrace()
         emit(ApiState.Error(message = IOException(e.message ?: "An unknown error occurred")))
-    }.flowOn(dispatcher)
+    }.flowOn(Dispatchers.IO)
+
 }

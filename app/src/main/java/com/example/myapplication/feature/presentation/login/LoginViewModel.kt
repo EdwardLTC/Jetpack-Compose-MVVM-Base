@@ -3,8 +3,7 @@ package com.example.myapplication.feature.presentation.login
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myapplication.domain.model.Products
-import com.example.myapplication.domain.reponsitory.ApiRepository
+import com.example.myapplication.domain.utils.ApiState
 import com.example.myapplication.domain.utils.doOnError
 import com.example.myapplication.domain.utils.doOnLoading
 import com.example.myapplication.domain.utils.doOnSuccess
@@ -14,23 +13,27 @@ import com.example.myapplication.feature.presentation.register.RegisterRoute
 import com.example.myapplication.feature.use_case.ApiUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val routeNavigator: RouteNavigator,
-    private val useCase: ApiUseCase
+    private val apiUseCase: ApiUseCase
 ) : ViewModel(), RouteNavigator by routeNavigator {
 
     val loginUiInfo by lazy { MutableStateFlow(LoginState()) }
 
     init {
         viewModelScope.launch {
-            useCase.getProductList()
-                .doOnLoading { Log.d("TAG", "Loading") }
-                .doOnSuccess { Log.d("TAG", "Success") }
-                .doOnError { Log.d("TAG", "Error") }
+            apiUseCase.getProductList().doOnLoading {
+                Log.d("LoginViewModel", "Loading")
+            }.doOnSuccess {
+                Log.d("LoginViewModel", "Success $it")
+            }.doOnError {
+                Log.d("LoginViewModel", "Error ${it.message}")
+            }.collect()
         }
     }
 

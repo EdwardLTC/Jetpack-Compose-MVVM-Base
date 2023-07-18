@@ -1,15 +1,18 @@
 package com.example.myapplication.di
 
-import com.example.myapplication.domain.reponsitory.ApiRepository
-import com.example.myapplication.domain.reponsitory.ApiRepositoryImp
+import com.example.myapplication.domain.reponsitory.ProductsRepository
+import com.example.myapplication.domain.reponsitory.ProductsRepositoryImp
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
-@InstallIn(ViewModelComponent::class)
+@InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
+    @Singleton
     @Binds
-    abstract fun providerApiRepository(apiRepositoryImpl: ApiRepositoryImp): ApiRepository
+    abstract fun providerApiRepository(apiRepositoryImpl: ProductsRepositoryImp): ProductsRepository
 }

@@ -1,3 +1,5 @@
 package com.example.myapplication.domain.model
 
-class Products : ArrayList<Product>()
+data class Products(
+    val products: List<Product>
+)

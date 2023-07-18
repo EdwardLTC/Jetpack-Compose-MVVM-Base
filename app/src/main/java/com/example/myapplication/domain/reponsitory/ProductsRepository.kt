@@ -5,7 +5,7 @@ import com.example.myapplication.domain.model.Products
 import com.example.myapplication.domain.utils.ApiState
 import kotlinx.coroutines.flow.Flow
 
-interface ApiRepository {
+interface ProductsRepository {
     suspend fun getProductList(): Flow<ApiState<Products>>
 
     suspend fun getProductInfo(id: Int): Flow<ApiState<Product>>
