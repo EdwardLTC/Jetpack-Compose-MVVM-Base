@@ -1,5 +1,6 @@
 package com.example.myapplication.feature.presentation.bottom.home
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,9 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.feature.navigation.base.NavRoute
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.myapplication.dummy.Food
+import com.example.myapplication.domain.model.Product
 import com.example.myapplication.dummy.dummyCategory
-import com.example.myapplication.dummy.dummyFood
 
 object HomeRoute : NavRoute<HomeViewModel> {
     override val route: String = this::class.java.simpleName.toString().replace("Route", "")
@@ -39,7 +40,7 @@ object HomeRoute : NavRoute<HomeViewModel> {
     @Composable
     override fun Content(viewModel: HomeViewModel) =
         HomeScreen(
-            data = viewModel.data,
+            data = viewModel.viewState.collectAsState().value.data,
             navigateToDetails = viewModel::navigateToProductDetails
         )
 }
@@ -47,7 +48,7 @@ object HomeRoute : NavRoute<HomeViewModel> {
 
 @Composable
 fun HomeScreen(
-    data: List<Food>,
+    data: List<Product>,
     navigateToDetails: (Int) -> Unit = {}
 ) {
     var selectedTabIndex by remember { mutableStateOf(0) }
@@ -79,8 +80,8 @@ fun HomeScreen(
                 .padding(horizontal = 25.dp)
         ) {
             items(data.size) {
-                FoodComponent(food = data[it], onItemClick = { food ->
-                    navigateToDetails(food.id)
+                FoodComponent(product = data[it], onItemClick = { product ->
+                    navigateToDetails(product.id!!)
                 })
             }
         }
@@ -112,5 +113,5 @@ fun TextBox(text: String, isSelected: Boolean = false) {
 @Preview(name = "HomeScreen", showSystemUi = true)
 @Composable
 private fun PreviewHomeScreen() {
-    HomeScreen(dummyFood)
+    HomeScreen(emptyList())
 }

@@ -9,10 +9,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,10 +32,13 @@ import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.myapplication.domain.model.Product
+import com.example.myapplication.domain.model.Rating
 import com.example.myapplication.dummy.Food
 import com.example.myapplication.feature.navigation.base.NavRoute
 import com.example.myapplication.feature.ui.core.Button
 import com.example.myapplication.feature.ui.theme.MyIcons
+import kotlinx.coroutines.flow.MutableStateFlow
 
 
 object ProductDetailsRoute : NavRoute<ProductDetailsViewModel> {
@@ -47,16 +53,19 @@ object ProductDetailsRoute : NavRoute<ProductDetailsViewModel> {
 
     @Composable
     override fun Content(viewModel: ProductDetailsViewModel) =
-        ProductDetailsScreen(onBackClick = viewModel::navigateUp, food = viewModel.food!!)
+        ProductDetailsScreen(
+            product = viewModel.viewState.collectAsState().value.data
+        )
 }
 
 @Composable
 fun ProductDetailsScreen(
-    food: Food, onBackClick: () -> Unit = {}
+    product: Product?,
+    onBackClick: () -> Unit = {},
 ) {
     Column(
         verticalArrangement = Arrangement.Top,
-        modifier = Modifier.padding(top = 5.dp),
+        modifier = Modifier.padding(top = 5.dp)
     ) {
         Column(modifier = Modifier.weight(1f)) {
             TitleComponent(
@@ -65,78 +74,74 @@ fun ProductDetailsScreen(
                     .zIndex(2f),
                 onBackClick = onBackClick
             )
-            Column(
-                modifier = Modifier.padding(16.dp),
+            if (product != null) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(product.image)
+                            .crossfade(true)
+                            .build(),
+                        contentDescription = "Food Image",
+                        contentScale = ContentScale.Inside,
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .height(200.dp)
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(12.dp))
+                    )
 
-                ) {
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(food.image)
-                        .crossfade(true)
-                        .build(),
-                    contentDescription = "Food Image",
-                    contentScale = ContentScale.FillBounds,
+                    Text(
+                        text = "$${product.price}",
+                        fontSize = 24.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(top = 16.dp)
+                            .fillMaxWidth(),
+                        color = Color.Green,
+                        fontWeight = FontWeight(700)
+                    )
+
+                    Text(
+                        text = "${product.title}",
+                        fontSize = 24.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(top = 12.dp)
+                            .fillMaxWidth(),
+                        color = Color.Black,
+                        fontWeight = FontWeight(700)
+                    )
+
+                    Text(
+                        text = "Product Details",
+                        fontSize = 16.sp,
+                        textAlign = TextAlign.Left,
+                        color = Color.Black,
+                        fontWeight = FontWeight(700),
+                        modifier = Modifier.padding(top = 16.dp)
+                    )
+
+                    Text(
+                        text = "${product.description}",
+                        fontSize = 14.sp,
+                        textAlign = TextAlign.Left,
+                        color = Color.Gray,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                }
+                Button(
+                    text = "Login",
+                    onClick = {},
                     modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .height(200.dp)
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(12.dp))
-                )
-
-                Text(
-                    text = "$${food.price}",
-                    fontSize = 24.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .padding(top = 16.dp)
-                        .fillMaxWidth(),
-                    color = Color.Green,
-                    fontWeight = FontWeight(700)
-                )
-
-                Text(
-                    text = food.name,
-                    fontSize = 24.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .padding(top = 12.dp)
-                        .fillMaxWidth(),
-                    color = Color.Black,
-                    fontWeight = FontWeight(700)
-                )
-
-                Text(
-                    text = "Product Details",
-                    fontSize = 16.sp,
-                    textAlign = TextAlign.Left,
-                    color = Color.Black,
-                    fontWeight = FontWeight(700),
-                    modifier = Modifier.padding(top = 16.dp)
-                )
-
-                Text(
-                    text = food.description,
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.Left,
-                    color = Color.Gray,
-                    modifier = Modifier.padding(top = 8.dp)
+                        .padding(top = 18.dp)
+                        .padding(horizontal = 16.dp, vertical = 30.dp),
+                    enabled = true,
+                    shape = RoundedCornerShape(8.dp)
                 )
             }
         }
-        Button(
-            text = "Login",
-            onClick = {},
-            modifier = Modifier
-                .padding(top = 18.dp)
-                .padding(horizontal = 16.dp, vertical = 30.dp),
-            enabled = true,
-            shape = RoundedCornerShape(8.dp)
-        )
-
     }
-
 }
-
 
 @Composable
 fun TitleComponent(modifier: Modifier = Modifier, onBackClick: () -> Unit = {}) {
@@ -174,13 +179,15 @@ fun TitleComponent(modifier: Modifier = Modifier, onBackClick: () -> Unit = {}) 
 @Composable
 fun ProductDetailsScreenPreview() {
     ProductDetailsScreen(
-        Food(
-            id = 10,
-            name = "Pizza",
-            price = 20,
-            image = "https://images.pexels.com/photos/6210774/pexels-photo-6210774.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-            description = "Pizza is a savory dish of Italian origin consisting of a usually round, flattened base of leavened wheat-based dough topped with tomatoes, cheese, and often various other ingredients, which is then baked at a high temperature, traditionally in a wood-fired oven."
-        )
+        product = Product(
+            id = 1,
+            title = "Product 1",
+            description = "Description 1",
+            image = "https://picsum.photos/200/300",
+            price = 10.0,
+            category = "Category 1",
+            rating = Rating()
+        ),
     )
 }
 

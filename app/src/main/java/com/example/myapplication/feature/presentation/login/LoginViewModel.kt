@@ -20,22 +20,9 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val routeNavigator: RouteNavigator,
-    private val apiUseCase: ApiUseCase
 ) : ViewModel(), RouteNavigator by routeNavigator {
 
     val loginUiInfo by lazy { MutableStateFlow(LoginState()) }
-
-    init {
-        viewModelScope.launch {
-            apiUseCase.getProductList().doOnLoading {
-                Log.d("LoginViewModel", "Loading")
-            }.doOnSuccess {
-                Log.d("LoginViewModel", "Success $it")
-            }.doOnError {
-                Log.d("LoginViewModel", "Error ${it.message}")
-            }.collect()
-        }
-    }
 
     val isDisableButtonLogin: Boolean
         get() = loginUiInfo.value.Username.isEmpty() || loginUiInfo.value.Password.isEmpty()

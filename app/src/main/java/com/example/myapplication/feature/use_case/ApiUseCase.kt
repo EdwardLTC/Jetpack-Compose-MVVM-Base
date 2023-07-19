@@ -1,7 +1,6 @@
 package com.example.myapplication.feature.use_case
 
 import com.example.myapplication.domain.model.Product
-import com.example.myapplication.domain.model.Products
 import com.example.myapplication.domain.reponsitory.ProductsRepository
 import com.example.myapplication.domain.utils.ApiState
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +13,7 @@ class ApiUseCase @Inject constructor(
         return apiRepository.getProductList()
     }
 
-    suspend fun getProductInfo(id: Int): Flow<ApiState<List<Product>>> {
-        return apiRepository.getProductList()
+    suspend fun getProductInfo(id: Int): Flow<ApiState<Product>> {
+        return apiRepository.getProductInfo(id)
     }
 }

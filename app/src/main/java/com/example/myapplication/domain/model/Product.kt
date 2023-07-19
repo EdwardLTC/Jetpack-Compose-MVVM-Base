@@ -1,11 +1,11 @@
 package com.example.myapplication.domain.model
 
 data class Product(
-    val category: String,
-    val description: String,
-    val id: Int,
-    val image: String,
-    val price: Double,
-    val rating: Rating,
-    val title: String
+    val category: String? = "",
+    val description: String? = "",
+    val id: Int? = 0,
+    val image: String? = "",
+    val price: Double? = 0.0,
+    val rating: Rating? = Rating(),
+    val title: String? = ""
 )

@@ -49,7 +49,7 @@ object BottomAppRoute : NavRoute<BottomAppViewModel> {
     override fun viewModel(): BottomAppViewModel = hiltViewModel()
 
     @Composable
-    override fun Content(viewModel: BottomAppViewModel) = MainBottomApp()
+    override fun Content(viewModel: BottomAppViewModel) = MainBottomApp(viewModel)
 
 }
 
@@ -57,10 +57,9 @@ object BottomAppRoute : NavRoute<BottomAppViewModel> {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainBottomApp() {
-    val navController = AppNavController.bottomNavController!!
-    Scaffold(bottomBar = { BottomBar(navController) }) {
-        BottomNavGraph(navController = navController)
+fun MainBottomApp(viewModel: BottomAppViewModel) {
+    Scaffold(bottomBar = { BottomBar(viewModel.navController) }) {
+        BottomNavGraph(navController = viewModel.navController)
     }
 }
 

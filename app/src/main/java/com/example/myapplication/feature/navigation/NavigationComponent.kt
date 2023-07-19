@@ -7,7 +7,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.navigation
 import com.example.myapplication.feature.navigation.bottom_bar.BottomAppRoute
+import com.example.myapplication.feature.navigation.bottom_bar.MainBottomApp
 import com.example.myapplication.feature.presentation.login.LoginRoute
 import com.example.myapplication.feature.presentation.product_details.ProductDetailsRoute
 import com.example.myapplication.feature.presentation.register.RegisterRoute
@@ -19,7 +22,7 @@ fun NavigationComponent(
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = LoginRoute.route,
+        startDestination = BottomAppRoute.route,
         modifier = Modifier.padding(paddingValues)
     ) {
         LoginRoute.composable(this, navHostController)
